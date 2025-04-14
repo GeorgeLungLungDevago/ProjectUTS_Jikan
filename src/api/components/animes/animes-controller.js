@@ -10,7 +10,7 @@ async function getFullAnime(req, res) {
     res.json(anime);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' })
   }
 }
 
@@ -19,12 +19,12 @@ async function getAnimeById(req, res) {
     const id = req.params.id;
     const anime = await animeService.getAnimeById(id);
     if(!anime) {
-      return res.status(404).json({ message: 'Anime not found' });
+      return res.status(404).json({ message: 'Anime not found' })
     }
     res.json(anime);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' })
   }
 }
 

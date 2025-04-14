@@ -7,6 +7,11 @@ module.exports = (db) => {
         type: String,
       },
       about: String,
+      animeId: {
+        type: db.Schema.Types.ObjectId,
+        ref: 'Anime',
+        require: true,
+      }
     })
   );
 };
