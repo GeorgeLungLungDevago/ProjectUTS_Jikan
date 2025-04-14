@@ -3,7 +3,5 @@ const route = express.Router();
 const characterController = require('./characters-controller');
 
 module.exports = (app) => {
-  app.use(route);
-
-  router.get('/anime/:id/characters', characterController.getCharacterByAnimeId);
+  app.use('/characters', route);
 }
