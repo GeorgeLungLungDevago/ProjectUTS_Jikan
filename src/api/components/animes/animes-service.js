@@ -10,7 +10,12 @@ async function getAnimeById(id) {
   return anime;
 }
 
+async function getCharactersByAnimeId(AnimeId) {
+  return await animeRepository.getCharactersByAnimeId(AnimeId);
+}
+
 module.exports = {
   getFullAnimeById,
   getAnimeById,
+  getCharactersByAnimeId,
 }
