@@ -1,21 +1,23 @@
 /* eslint-disable prettier/prettier */
 module.exports = (db) => {
-  db.Model(
+  db.model(
     'Anime',
     db.Schema({
       title_en: String,
       title_jp: String,
       episodes: Number,
-      studio: String,
+      studio: {
+        type: String,
+      },
       status: {
         type: String,
-        enum: ['airing', 'completed', 'upcoming'],
+        enum: ['Airing', 'Completed', 'Upcoming'],
         required: true,
       },
       season: {
         type: String,
-        enum: ['Winter', 'Spring', 'Summer', 'Fall'],
-        required: true,
+        enum: ['Winter', 'Spring', 'Summer', 'Fall', 'Unknown'],
+        required: false,
       },
       airing_date: {
         start: {
@@ -53,6 +55,7 @@ module.exports = (db) => {
         ],
         required: true,
       },
+      duration_minutes: Number,
     })
   );
 };
