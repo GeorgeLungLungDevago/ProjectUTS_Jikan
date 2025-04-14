@@ -3,11 +3,11 @@ const route = express.Router();
 const animeController = require('./animes-controller');
 
 module.exports = (app) => {
-  app.use('/animes', route);
+  app.use('/anime', route);
 
   //Mendapatkan anime full by id
-  route.get('/anime/:id/full', animeController.getFullAnime);
+  route.get('/:id/full', animeController.getFullAnime);
 
   //Mendapatkan anime by id ( not full )
-  route.get('/anime/:id', animeController.getAnimeById)
+  route.get('/:id', animeController.getAnimeById)
 };
