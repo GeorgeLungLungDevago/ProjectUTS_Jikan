@@ -46,10 +46,15 @@ async function getAnimePictures() {
   return Animes.getAnimePictures();
 }
 
+async function getAnimeInfo(){
+  return Animes.getAnimeInfo();
+}
+
 module.exports = {
   addAnime,
   findById,
   findBasicById,
   getCharactersByAnimeId,
   getAnimePictures,
+  getAnimeInfo,
 };

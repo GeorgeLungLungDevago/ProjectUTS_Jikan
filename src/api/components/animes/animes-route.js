@@ -19,4 +19,8 @@ module.exports = (app) => {
 
   //Mengembalikan gambar anime (cover anime)
   route.get('/:id/pictures', animeController.getAnimePictures);
+
+  //mendapatkan info anime (genre, studio, etc)
+  route.get('/:id/moreinfo', animeController.getAnimeInfo);
+
 };

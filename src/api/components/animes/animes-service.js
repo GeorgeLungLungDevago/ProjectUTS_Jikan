@@ -47,10 +47,15 @@ async function getAnimePictures(id) {
   return await animeRepository.getAnimePictures(id);
 }
 
+async function getAnimeInfo() {
+  return await animeRepository.getAnimeInfo();
+}
+
 module.exports = {
   addAnime,
   getFullAnimeById,
   getAnimeById,
   getCharactersByAnimeId,
   getAnimePictures,
+  getAnimeInfo,
 };
