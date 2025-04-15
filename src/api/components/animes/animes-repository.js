@@ -54,6 +54,11 @@ async function getAnimeRecomendations(){
   return Animes.getAnimeRecomendations();
 }
 
+async function getExternalLinksByAnimeId(id){
+  const anime = await Animes.getExternalLinksByAnimeId(id, 'external_links');
+  return anime?.external_links || null;
+}
+
 module.exports = {
   addAnime,
   findById,
@@ -61,5 +66,6 @@ module.exports = {
   getCharactersByAnimeId,
   getAnimePictures,
   getAnimeMoreInfo,
-  getAnimeRecomendations
+  getAnimeRecomendations,
+  getExternalLinksByAnimeId,
 };

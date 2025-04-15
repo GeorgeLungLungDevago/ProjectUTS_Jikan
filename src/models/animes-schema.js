@@ -54,7 +54,13 @@ module.exports = (db) => {
         ],
         required: true,
       },
-      duration_minutes: Number,
+      duration_minutes: Number, 
+      external_links: {
+        mal: {type:String},
+        anilist: {type:String},
+        official: {type:String},
+        youtube_trailer: {type:String},
+      }
     })
   );
 };
