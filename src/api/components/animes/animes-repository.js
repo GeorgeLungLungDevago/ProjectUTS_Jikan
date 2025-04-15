@@ -50,6 +50,10 @@ async function getAnimeMoreInfo(){
   return Animes.getAnimeMoreInfo();
 }
 
+async function getAnimeRecomendations(){
+  return Animes.getAnimeRecomendations();
+}
+
 module.exports = {
   addAnime,
   findById,
@@ -57,4 +61,5 @@ module.exports = {
   getCharactersByAnimeId,
   getAnimePictures,
   getAnimeMoreInfo,
+  getAnimeRecomendations
 };
