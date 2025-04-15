@@ -95,10 +95,10 @@ async function getAnimePictures(req, res) {
   }
 }
 
-async function getAnimeInfo(req, res) {
+async function getAnimeMoreInfo(req, res) {
   try{
     const id = req.params.id;
-    const anime = await animeService.getAnimeInfo(id);
+    const anime = await animeService.getAnimeMoreInfo(id);
     if(!anime){
       return res.status(404).json({ message: 'Anime not found' });
     }
@@ -115,5 +115,5 @@ module.exports = {
   getAnimeById,
   getCharactersByAnimeId,
   getAnimePictures,
-  getAnimeInfo,
+  getAnimeMoreInfo,
 };

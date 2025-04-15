@@ -21,6 +21,6 @@ module.exports = (app) => {
   route.get('/:id/pictures', animeController.getAnimePictures);
 
   //mendapatkan info anime (genre, studio, etc)
-  route.get('/:id/moreinfo', animeController.getAnimeInfo);
+  route.get('/:id/moreinfo', animeController.getAnimeMoreInfo);
 
 };

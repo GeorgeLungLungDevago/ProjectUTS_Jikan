@@ -47,8 +47,8 @@ async function getAnimePictures(id) {
   return await animeRepository.getAnimePictures(id);
 }
 
-async function getAnimeInfo() {
-  return await animeRepository.getAnimeInfo();
+async function getAnimeMoreInfo() {
+  return await animeRepository.getAnimeMoreInfo();
 }
 
 module.exports = {
@@ -57,5 +57,5 @@ module.exports = {
   getAnimeById,
   getCharactersByAnimeId,
   getAnimePictures,
-  getAnimeInfo,
+  getAnimeMoreInfo,
 };
