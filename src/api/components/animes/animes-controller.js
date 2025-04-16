@@ -183,14 +183,42 @@ async function getAnimeRecomendations(req, res) {
   }
 }
 
-async function getAnimeUserUpdates(req, res) {
+async function getAnimeReviuews(req, res) {
   try {
     const id = req.params.id;
-    const anime = await animeService.getAnimeUserUpdates(id);
+    const anime = await animeService.getAnimeReviews(id);
     if (!anime) {
       return res.status(404).json({ message: 'Anime not found' });
     }
     res.json(anime);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+async function getAnimeRelations(req, res) {
+  try {
+    const id = req.params.id;
+    const anime = await animeService.getAnimeRelations(id);
+    if (!anime) {
+      return res.status(404).json({ message: 'Anime not found' });
+    }
+    res.json(anime);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+async function getAnimeThemes(req, res) {
+  try {
+    const id = req.params.id;
+    const themes = await animeService.getAnimeThemes(id);
+    if (!themes) {
+      return res.status(404).json({ message: 'Anime not found' });
+    }
+    res.json(themes);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -208,5 +236,7 @@ module.exports = {
   getAnimePictures,
   getAnimeMoreInfo,
   getAnimeRecomendations,
-  getAnimeUserUpdates,
+  getAnimeReviuews,
+  getAnimeRelations,
+  getAnimeThemes,
 };

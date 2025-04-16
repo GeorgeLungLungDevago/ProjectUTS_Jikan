@@ -70,17 +70,26 @@ async function getAnimePictures(id) {
   return Animes.findById(id).select('image_url');
 }
 
-async function getAnimeMoreInfo() {
-  return Animes.getAnimeMoreInfo();
+async function getAnimeMoreInfo(id) {
+  return Animes.findById(id, 'more_info');
 }
 
-async function getAnimeRecomendations() {
-  return Animes.getAnimeRecomendations();
+async function getAnimeRecomendations(id) {
+  return Animes.findById(id, 'recomendation');
 }
 
-async function getAnimeUserUpdates(){
-  return Animes.getAnimeUserUpdates();
+async function getAnimeReviews(id) {
+  return Animes.findById(id, 'reviews');
 }
+
+async function getAnimeRelations(id){
+  return Animes.findById(id, 'relations');
+}
+
+async function getAnimeThemes(id) {
+  return Animes.findById(id, 'themes');
+}
+
 module.exports = {
   addAnime,
   findById,
@@ -92,5 +101,7 @@ module.exports = {
   getAnimePictures,
   getAnimeMoreInfo,
   getAnimeRecomendations,
-  getAnimeUserUpdates,
+  getAnimeReviews,
+  getAnimeRelations,
+  getAnimeThemes,
 };
