@@ -60,8 +60,13 @@ module.exports = {
   addAnime,
   findById,
   findBasicById,
+  getStaffByAnimeId,
+  getEpisodesByAnimeId,
+  getEpisodesByIndex,
   getCharactersByAnimeId,
   getAnimePictures,
   getAnimeMoreInfo,
+  getAnimeRecomendations,
+  getAnimeUserUpdates,
   getAnimeRecomendations,
 };

@@ -20,6 +20,14 @@ module.exports = (db) => {
         enum: ['Winter', 'Spring', 'Summer', 'Fall', 'Unknown'],
         required: false,
       },
+      episodes_list: [
+        {
+          url: String,
+          title: String,
+          score: Number,
+          aired: Date,
+        },
+      ],
       airing_date: {
         start: {
           type: Date, // null if the airing date is TBA
@@ -59,6 +67,33 @@ module.exports = (db) => {
       duration_minutes: Number,
       image_url: {
         type: [{ type: String, validate: urlValidator }],
+      },
+      staff: {
+        name: String,
+        role: [
+          'Producer',
+          'Assistant Producer',
+          'Script',
+          'Storyboard',
+          'Sound Director',
+          'Episode Director',
+          'Series Composition',
+          'Theme Song Lyrics',
+          'Inserted Song Performance',
+          'Key Animation',
+          'ADR Director',
+          'Animation Director',
+          'Special Effects',
+          'Background Art',
+          'Art Director',
+          'Color Design',
+          'Director of Photography',
+          'Digital Paint',
+          'In Between Animation',
+          'Music',
+          'Editing',
+          'Mechanical Design',
+        ],
       },
     })
   );
