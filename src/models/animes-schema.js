@@ -1,3 +1,5 @@
+const { urlValidator } = require('../../../utils/url-validator');
+
 module.exports = (db) => {
   db.model(
     'Anime',
@@ -55,6 +57,9 @@ module.exports = (db) => {
         required: true,
       },
       duration_minutes: Number,
+      image_url: {
+        type: [{ type: String, validate: urlValidator }],
+      },
     })
   );
 };
