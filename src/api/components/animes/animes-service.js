@@ -65,6 +65,10 @@ async function getAnimeRecomendations() {
   return await animeRepository.getAnimeRecomendations();
 }
 
+async function getAnimeUserUpdates() {
+  return await animeRepository.getAnimeUserUpdates();
+}
+
 module.exports = {
   addAnime,
   getFullAnimeById,
@@ -76,4 +80,5 @@ module.exports = {
   getAnimePictures,
   getAnimeMoreInfo,
   getAnimeRecomendations,
+  getAnimeUserUpdates,
 };
