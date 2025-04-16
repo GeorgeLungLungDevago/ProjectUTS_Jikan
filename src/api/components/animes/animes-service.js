@@ -30,13 +30,23 @@ async function addAnime(
 }
 
 async function getFullAnimeById(id) {
-  const anime = await animeRepository.findById(id);
-  return anime;
+  return await animeRepository.findById(id);
 }
 
 async function getAnimeById(id) {
-  const anime = await animeRepository.findBasicById(id);
-  return anime;
+  return await animeRepository.findBasicById(id);
+}
+
+async function getStaffByAnimeId(id) {
+  return await animeRepository.getStaffByAnimeId(id);
+}
+
+async function getEpisodesByAnimeId(id) {
+  return await animeRepository.getEpisodesByAnimeId(id);
+}
+
+async function getEpisodesByIndex(id, index) {
+  return await animeRepository.getEpisodesByIndex(id, index);
 }
 
 async function getCharactersByAnimeId(AnimeId) {
@@ -59,6 +69,9 @@ module.exports = {
   addAnime,
   getFullAnimeById,
   getAnimeById,
+  getStaffByAnimeId,
+  getEpisodesByAnimeId,
+  getEpisodesByIndex,
   getCharactersByAnimeId,
   getAnimePictures,
   getAnimeMoreInfo,
