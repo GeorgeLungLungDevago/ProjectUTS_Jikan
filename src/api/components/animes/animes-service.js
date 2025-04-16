@@ -128,17 +128,26 @@ async function getAnimePictures(id) {
   return await animeRepository.getAnimePictures(id);
 }
 
-async function getAnimeMoreInfo() {
-  return await animeRepository.getAnimeMoreInfo();
+async function getAnimeMoreInfo(id) {
+  return await animeRepository.getAnimeMoreInfo(id);
 }
 
-async function getAnimeRecomendations() {
-  return await animeRepository.getAnimeRecomendations();
+async function getAnimeRecomendations(id) {
+  return await animeRepository.getAnimeRecomendations(id);
 }
 
-async function getAnimeUserUpdates() {
-  return await animeRepository.getAnimeUserUpdates();
+async function getAnimeReviews(id) {
+  return await animeRepository.getAnimeReviews(id);
 }
+
+async function getAnimeRelations(id) {
+  return await animeRepository.getAnimeRelations(id);
+}
+
+async function getAnimeThemes(id) {
+  return await animeRepository.getAnimeThemes(id);
+}
+
 
 module.exports = {
   validateEpisodesList,
@@ -154,5 +163,7 @@ module.exports = {
   getAnimePictures,
   getAnimeMoreInfo,
   getAnimeRecomendations,
-  getAnimeUserUpdates,
+  getAnimeReviews,
+  getAnimeRelations,
+  getAnimeThemes,
 };

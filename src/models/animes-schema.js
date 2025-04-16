@@ -46,6 +46,64 @@ module.exports = (db) => {
         enum: ['shounen', 'shoujo', 'seinen', 'josei', 'kodomo'],
         required: true,
       },
+      more_info: {
+        type: String,
+        required: true,
+      },
+      recomendation: [
+        {
+          type: String,
+          url: String,
+          title: String,
+          required: true,
+        },
+      ],
+      relations: [
+        {
+          relation: {
+            type: String,
+            entry: [
+              {
+                id: 0,
+                type: String,
+                name: String,
+                url: String,
+              },
+            ],
+            required: true,
+          },
+        },
+      ],
+      reviews: [
+        {
+          type: String,
+          url: String,
+          title: String,
+          reaction: {
+            type: String,
+            overall: 0,
+            nice: 0,
+            love_it: 0,
+            funny: 0,
+            confusing: 0,
+            informative: 0,
+            well_writen: 0,
+            creative: 0,
+          },
+          reviews: String,
+          date: Date,
+          score: 0,
+          tags: [String],
+          is_spoiler: true,
+          is_preliminary: true,
+          episode_watched: 0,
+          required: true,
+        },
+      ],
+      themes: {
+        opening: [String],
+        ending: [String],
+      },
       genres: {
         type: [String],
         enum: [
@@ -94,6 +152,35 @@ module.exports = (db) => {
           ],
         },
       },
+      staff: [
+        {
+          name: String,
+          role: [
+            'Producer',
+            'Assistant Producer',
+            'Script',
+            'Storyboard',
+            'Sound Director',
+            'Episode Director',
+            'Series Composition',
+            'Theme Song Lyrics',
+            'Inserted Song Performance',
+            'Key Animation',
+            'ADR Director',
+            'Animation Director',
+            'Special Effects',
+            'Background Art',
+            'Art Director',
+            'Color Design',
+            'Director of Photography',
+            'Digital Paint',
+            'In Between Animation',
+            'Music',
+            'Editing',
+            'Mechanical Design',
+          ],
+        },
+      ],
     })
   );
 };
