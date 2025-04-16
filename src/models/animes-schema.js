@@ -1,11 +1,9 @@
-const { urlValidator } = require('../../../utils/url-validator');
-
 module.exports = (db) => {
   db.model(
     'Anime',
     db.Schema({
-      title_en: String,
-      title_jp: String,
+      title_en: { type: String, required: true },
+      title_jp: { type: String, required: true },
       episodes: Number,
       studio: {
         type: String,
@@ -65,35 +63,36 @@ module.exports = (db) => {
         required: true,
       },
       duration_minutes: Number,
-      image_url: {
-        type: [{ type: String, validate: urlValidator }],
-      },
+      image_url: [String],
       staff: {
         name: String,
-        role: [
-          'Producer',
-          'Assistant Producer',
-          'Script',
-          'Storyboard',
-          'Sound Director',
-          'Episode Director',
-          'Series Composition',
-          'Theme Song Lyrics',
-          'Inserted Song Performance',
-          'Key Animation',
-          'ADR Director',
-          'Animation Director',
-          'Special Effects',
-          'Background Art',
-          'Art Director',
-          'Color Design',
-          'Director of Photography',
-          'Digital Paint',
-          'In Between Animation',
-          'Music',
-          'Editing',
-          'Mechanical Design',
-        ],
+        role: {
+          type: [String],
+          enum: [
+            'Producer',
+            'Assistant Producer',
+            'Script',
+            'Storyboard',
+            'Sound Director',
+            'Episode Director',
+            'Series Composition',
+            'Theme Song Lyrics',
+            'Inserted Song Performance',
+            'Key Animation',
+            'ADR Director',
+            'Animation Director',
+            'Special Effects',
+            'Background Art',
+            'Art Director',
+            'Color Design',
+            'Director of Photography',
+            'Digital Paint',
+            'In Between Animation',
+            'Music',
+            'Editing',
+            'Mechanical Design',
+          ],
+        },
       },
     })
   );

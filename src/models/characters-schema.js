@@ -4,14 +4,14 @@ module.exports = (db) => {
     db.Schema({
       name: String,
       nicknames: {
-        type: String,
+        type: [String],
       },
       about: String,
       animeId: {
         type: db.Schema.Types.ObjectId,
         ref: 'Anime',
         require: true,
-      }
+      },
     })
   );
 };

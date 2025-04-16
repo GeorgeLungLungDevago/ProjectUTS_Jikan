@@ -4,4 +4,7 @@ const characterController = require('./characters-controller');
 
 module.exports = (app) => {
   app.use('/characters', route);
-}
+
+  // menambahkan data karakter anime ke dalam database
+  route.post('/', characterController.addCharacters);
+};

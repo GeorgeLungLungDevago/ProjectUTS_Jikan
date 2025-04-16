@@ -14,7 +14,8 @@ async function addAnime(
   demographics,
   genres,
   duration_minutes,
-  image_url
+  image_url,
+  staff
 ) {
   return Animes.addAnime(
     title_en,
@@ -28,7 +29,8 @@ async function addAnime(
     demographics,
     genres,
     duration_minutes,
-    image_url
+    image_url,
+    staff
   );
 }
 
@@ -38,6 +40,31 @@ async function findById(id) {
 
 async function findBasicById(id) {
   return Animes.findById(id).select('title_en title_jp studio status');
+}
+
+async function getStaffByAnimeId(id) {
+  const anime = await Animes.findById(id, 'staff');
+  return anime?.staff || null;
+}
+
+async function getEpisodesByAnimeId(id) {
+  const anime = await Animes.findById(id, 'episodes_list');
+  return anime || null;
+}
+
+async function getEpisodesByIndex(id, index) {
+  const anime = await Animes.findById(id).select(
+    'title_en episodes airing_date'
+  );
+  if (!anime || !anime.episodes || anime.episodes.lenght < index) {
+    //Menentukan adanya episode atau tidak
+    return null;
+  }
+  return {
+    title_en: anime.title_en,
+    episode: anime.episodes[index],
+    airing_date: anime.airing_date,
+  };
 }
 
 async function getCharactersByAnimeId(animeId) {
@@ -56,6 +83,9 @@ async function getAnimeRecomendations() {
   return Animes.getAnimeRecomendations();
 }
 
+async function getAnimeUserUpdates() {
+  return Animes.getAnimeUserUpdates();
+}
 module.exports = {
   addAnime,
   findById,
@@ -68,5 +98,4 @@ module.exports = {
   getAnimeMoreInfo,
   getAnimeRecomendations,
   getAnimeUserUpdates,
-  getAnimeRecomendations,
 };

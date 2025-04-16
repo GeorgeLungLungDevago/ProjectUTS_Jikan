@@ -1,4 +1,4 @@
-const animesRoute = require('./animes-route');
+const { errorResponder, errorTypes } = require('../../../core/errors');
 const animeService = require('./animes-service');
 
 async function addAnime(req, res) {
@@ -8,15 +8,25 @@ async function addAnime(req, res) {
       title_jp,
       episodes,
       studio,
-      status,
+      status: animeStatus,
       season,
+      episodes_list: episodesList,
       airing_date,
       age_rating,
       demographics,
       genres,
       duration_minutes,
       image_url: imageUrl,
+      staff,
     } = req.body;
+
+    episodesList = await animeService.validateEpisodesList(
+      req.body.episodes_list
+    );
+
+    await validateRequiredField(req.body);
+
+    imageUrl = await animeService.validateImageUrl(req.body.imageUrl);
 
     const data = {
       title_en,
@@ -25,19 +35,21 @@ async function addAnime(req, res) {
       studio,
       animeStatus,
       season,
+      episodesList,
       airing_date,
       age_rating,
       demographics,
       genres,
       duration_minutes,
-      image_url: Array.isArray(imageUrl) ? imageUrl : [imageUrl],
+      imageUrl: Array.isArray(imageUrl) ? imageUrl : [imageUrl], // force single string into array
+      staff,
     };
 
     const anime = await animeService.addAnime(data);
 
     if (!anime) {
       throw errorResponder(
-        errorTypes.VALIDATION_ERROR,
+        errorTypes.UNPROCESSABLE_ENTITY,
         'Failed to add anime entry'
       );
     }
@@ -86,9 +98,9 @@ async function getStaffByAnimeId(req, res) {
     if (!staff) {
       return res.status(404).json({ message: 'No staff found for this anime' });
     }
-    res.json(staff)
+    res.json(staff);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ message: 'Server error' });
   }
 }
@@ -98,12 +110,14 @@ async function getEpisodesByAnimeId(req, res) {
     const id = req.params.id;
     const episodes = await animeService.getEpisodesByAnimeId(id);
     if (!episodes) {
-      return res.status(404).json({ message: 'Anime not found or no episodes available'});
+      return res
+        .status(404)
+        .json({ message: 'Anime not found or no episodes available' });
     }
-    res.json(episodes)
+    res.json(episodes);
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ message: 'Server error'});
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
   }
 }
 
@@ -111,7 +125,8 @@ async function getEpisodesByIndex(req, res) {
   try {
     const { id, episode } = req.params;
     const index = parseInt(episode, 10);
-    if (isNaN(index) || index < 0) { //Menjaga agar yg disebut ada episode nya
+    if (isNaN(index) || index < 0) {
+      //Menjaga agar yg disebut ada episode nya
       return res.status(404).json({ message: 'Invalid episode index' });
     }
     const data = await animeService.getEpisodesByIndex(id, index);
@@ -120,7 +135,7 @@ async function getEpisodesByIndex(req, res) {
     }
     res.json(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ message: 'Server error' });
   }
 }

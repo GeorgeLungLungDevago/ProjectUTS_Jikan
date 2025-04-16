@@ -1,12 +1,80 @@
 const animeRepository = require('./animes-repository');
+const { urlValidator } = require('../../../utils/url-validator');
+const { errorResponder, errorTypes } = require('../../../core/errors');
+
+async function validateEpisodesList(episodes_list) {
+  // jika tidak ada daftar episode, misalnya pada kasus anime belum tayang,
+  // langsung skip validasi ini, karena pengisian episodes_list opsional
+  if (!episodes_list) return;
+
+  if (!Array.isArray(episodes_list)) {
+    throw errorResponder(
+      errorTypes.VALIDATION_ERROR,
+      'episodes_list must be an array of episode objects'
+    );
+  }
+
+  for (let i = 0; i < episodes_list.length; ++i) {
+    const ep = episodes_list[i];
+    if (!urlValidator(ep.url)) {
+      throw errorResponder(
+        errorTypes.VALIDATION_ERROR,
+        'Episode ${i + 1} has invalid episode URL!'
+      );
+    }
+    if (!ep.title) {
+      throw errorResponder(
+        errorTypes.VALIDATION_ERROR,
+        'Episode ${i + 1} has invalid or missing title!'
+      );
+    }
+    if (!ep.aired || !(ep.aired instanceof Date)) {
+      throw errorResponder(
+        errorTypes.VALIDATION_ERROR,
+        'Episode ${i + 1} has invalid or missing aired date!'
+      );
+    }
+  }
+  return episodes_list;
+}
+
+async function validateRequiredField(data) {
+  if (
+    // judul tidak boleh berupa string kosong (bukan null)
+    !data.title_en ||
+    data.title_en.trim() === '' ||
+    !data.title_jp ||
+    data.title_jp.trim() === '' ||
+    !data.animeStatus ||
+    !data.age_rating ||
+    !data.demographics ||
+    !Array.isArray(data.genres) ||
+    data.genres.length === 0
+  ) {
+    throw errorResponder(
+      errorTypes.VALIDATION_ERROR,
+      'Anime entry is invalid or missing one or more required fields:' +
+        'title_en, title_jp, status, age_rating, demographics, genres'
+    );
+  }
+}
+
+async function validateImageUrl(imageUrl) {
+  const valid = urlValidator(imageUrl);
+  if (!valid) {
+    throw errorResponder(errorTypes.VALIDATION_ERROR, 'Invalid Image URL!');
+  }
+  return imageUrl;
+}
 
 async function addAnime(
   title_en,
   title_jp,
   episodes,
   studio,
-  status,
+  animeStatus,
   season,
+  episodes_list,
   airing_date,
   age_rating,
   demographics,
@@ -19,8 +87,9 @@ async function addAnime(
     title_jp,
     episodes,
     studio,
-    status,
+    animeStatus,
     season,
+    episodes_list,
     airing_date,
     age_rating,
     demographics,
@@ -72,6 +141,9 @@ async function getAnimeUserUpdates() {
 }
 
 module.exports = {
+  validateEpisodesList,
+  validateRequiredField,
+  validateImageUrl,
   addAnime,
   getFullAnimeById,
   getAnimeById,
