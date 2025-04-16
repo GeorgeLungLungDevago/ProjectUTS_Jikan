@@ -2,30 +2,46 @@ const animeService = require('./animes-service');
 
 async function addAnime(req, res) {
   try {
-    const data = ({
-      title_en: titleEN,
-      title_jp: titleJP,
-      episodes: episodes,
-      studio: studio,
-      status: animeStatus,
-      season: season,
-      airing_date: airing_date,
-      age_rating: age_rating,
-      demographics: demographics,
-      genres: genres,
-      duration_minutes: duration_minutes,
-    } = req.body);
+    const {
+      title_en,
+      title_jp,
+      episodes,
+      studio,
+      status,
+      season,
+      airing_date,
+      age_rating,
+      demographics,
+      genres,
+      duration_minutes,
+      image_url: imageUrl,
+    } = req.body;
 
-    if (!data) {
+    const data = {
+      title_en,
+      title_jp,
+      episodes,
+      studio,
+      animeStatus,
+      season,
+      airing_date,
+      age_rating,
+      demographics,
+      genres,
+      duration_minutes,
+      image_url: Array.isArray(imageUrl) ? imageUrl : [imageUrl],
+    };
+
+    const anime = await animeService.addAnime(data);
+
+    if (!anime) {
       throw errorResponder(
         errorTypes.VALIDATION_ERROR,
         'Failed to add anime entry'
       );
     }
 
-    const anime = await booksService.create(data);
-
-    return response
+    return res
       .status(201)
       .json({ message: 'Anime added successfully to the database entry' });
   } catch (error) {
@@ -81,13 +97,10 @@ async function getCharactersByAnimeId(req, res) {
 async function getAnimePictures(req, res) {
   try {
     const id = req.params.id;
-    const anime = await animeService.getAnimePictures(id);
-    // TO DO LIST:
-    // w harus kembalikan link gambar kah? kalo iya,
-    // daftar link jadikan data di schema anime atau gmn? ntar
-    // kebanyakan models soalnya
-    if (!anime) {
-      return res.status(404).json({ message: 'Anime not found' });
+    const pictures = await animeService.getAnimePictures(id);
+
+    if (!pictures) {
+      return res.status(404).json({ message: 'Image not found' });
     }
   } catch (error) {
     console.error(error);
@@ -96,10 +109,10 @@ async function getAnimePictures(req, res) {
 }
 
 async function getAnimeMoreInfo(req, res) {
-  try{
+  try {
     const id = req.params.id;
     const anime = await animeService.getAnimeMoreInfo(id);
-    if(!anime){
+    if (!anime) {
       return res.status(404).json({ message: 'Anime not found' });
     }
     res.json(anime);
@@ -109,11 +122,11 @@ async function getAnimeMoreInfo(req, res) {
   }
 }
 
-async function getAnimeRecomendations(req, res){
-  try{
+async function getAnimeRecomendations(req, res) {
+  try {
     const id = req.params.id;
     const anime = await animeService.getAnimeRecomendations(id);
-    if(!anime){
+    if (!anime) {
       return res.status(404).json({ message: 'Anime not found' });
     }
     res.json(anime);

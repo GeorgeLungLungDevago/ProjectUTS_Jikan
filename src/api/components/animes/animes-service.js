@@ -11,7 +11,8 @@ async function addAnime(
   age_rating,
   demographics,
   genres,
-  duration_minutes
+  duration_minutes,
+  image_url
 ) {
   const anime = await animeRepository.addAnime(
     title_en,
@@ -24,7 +25,8 @@ async function addAnime(
     age_rating,
     demographics,
     genres,
-    duration_minutes
+    duration_minutes,
+    image_url
   );
   return anime;
 }

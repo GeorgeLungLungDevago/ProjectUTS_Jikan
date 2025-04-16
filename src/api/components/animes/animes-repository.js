@@ -13,7 +13,8 @@ async function addAnime(
   age_rating,
   demographics,
   genres,
-  duration_minutes
+  duration_minutes,
+  image_url
 ) {
   return Animes.addAnime(
     title_en,
@@ -26,7 +27,8 @@ async function addAnime(
     age_rating,
     demographics,
     genres,
-    duration_minutes
+    duration_minutes,
+    image_url
   );
 }
 
@@ -42,15 +44,15 @@ async function getCharactersByAnimeId(animeId) {
   return Characters.find({ animeId: animeId });
 }
 
-async function getAnimePictures() {
-  return Animes.getAnimePictures();
+async function getAnimePictures(id) {
+  return Animes.findById(id).select('image_url');
 }
 
-async function getAnimeMoreInfo(){
+async function getAnimeMoreInfo() {
   return Animes.getAnimeMoreInfo();
 }
 
-async function getAnimeRecomendations(){
+async function getAnimeRecomendations() {
   return Animes.getAnimeRecomendations();
 }
 
@@ -61,5 +63,5 @@ module.exports = {
   getCharactersByAnimeId,
   getAnimePictures,
   getAnimeMoreInfo,
-  getAnimeRecomendations
+  getAnimeRecomendations,
 };
