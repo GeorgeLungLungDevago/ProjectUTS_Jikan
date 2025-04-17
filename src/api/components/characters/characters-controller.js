@@ -1,11 +1,12 @@
 const { errorResponder, errorTypes } = require('../../../core/errors');
 const characterService = require('./characters-service');
 
-async function addCharacters(req, res) {
+async function addCharactersToAnime(req, res) {
   try {
+    const animeId = req.params.id;
     const { name, nicknames, about } = req.body;
 
-    const data = { name, nicknames, about };
+    const data = { name, nicknames, about, animeId };
 
     if (!name) {
       throw errorResponder(
@@ -21,7 +22,7 @@ async function addCharacters(req, res) {
       );
     }
 
-    const character = await characterService.addCharacters(data);
+    const character = await characterService.addCharactersToAnime(data);
 
     if (!character) {
       throw errorResponder(
@@ -40,5 +41,5 @@ async function addCharacters(req, res) {
 }
 
 module.exports = {
-  addCharacters,
+  addCharactersToAnime,
 };

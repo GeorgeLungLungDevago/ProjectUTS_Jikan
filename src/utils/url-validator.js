@@ -1,4 +1,5 @@
 const validate = require('mongoose-validator');
+const { errorResponder, errorTypes } = require('../core/errors');
 
 // check url string by using mongoose-validator library
 const urlValidator = [
@@ -12,6 +13,14 @@ const urlValidator = [
   }),
 ];
 
+async function validateUrl(url) {
+  const valid = urlValidator(url);
+  if (!valid) {
+    throw errorResponder(errorTypes.VALIDATION_ERROR, 'Invalid URL!');
+  }
+  return url;
+}
+
 module.exports = {
-  urlValidator,
+  validateUrl,
 };

@@ -1,12 +1,12 @@
-module.exports = (db) => {
+module.exports = (db) =>
   db.model(
-    'Anime',
+    'Animes',
     db.Schema({
       title_en: { type: String, required: true },
       title_jp: { type: String, required: true },
-      episodes: Number,
       studio: {
         type: String,
+        required: false,
       },
       status: {
         type: String,
@@ -18,14 +18,6 @@ module.exports = (db) => {
         enum: ['Winter', 'Spring', 'Summer', 'Fall', 'Unknown'],
         required: false,
       },
-      episodes_list: [
-        {
-          url: String,
-          title: String,
-          score: Number,
-          aired: Date,
-        },
-      ],
       airing_date: {
         start: {
           type: Date, // null if the airing date is TBA
@@ -48,111 +40,13 @@ module.exports = (db) => {
       },
       more_info: {
         type: String,
-        required: true,
-      },
-      recomendation: [
-        {
-          type: String,
-          url: String,
-          title: String,
-          required: true,
-        },
-      ],
-      relations: [
-        {
-          relation: {
-            type: String,
-            entry: [
-              {
-                id: 0,
-                type: String,
-                name: String,
-                url: String,
-              },
-            ],
-            required: true,
-          },
-        },
-      ],
-      reviews: [
-        {
-          type: String,
-          url: String,
-          title: String,
-          reaction: {
-            type: String,
-            overall: 0,
-            nice: 0,
-            love_it: 0,
-            funny: 0,
-            confusing: 0,
-            informative: 0,
-            well_writen: 0,
-            creative: 0,
-          },
-          reviews: String,
-          date: Date,
-          score: 0,
-          tags: [String],
-          is_spoiler: true,
-          is_preliminary: true,
-          episode_watched: 0,
-          required: true,
-        },
-      ],
-      themes: {
-        opening: [String],
-        ending: [String],
+        required: false,
       },
       genres: {
         type: [String],
-        enum: [
-          'action',
-          'adventure',
-          'comedy',
-          'drama',
-          'fantasy',
-          'horror',
-          'mystery',
-          'romance',
-          'sci-fi',
-          'slice of life',
-        ],
         required: true,
       },
-      duration_minutes: Number,
+      duration: String,
       image_url: [String],
-      staff: {
-        name: String,
-        role: {
-          type: [String],
-          enum: [
-            'Producer',
-            'Assistant Producer',
-            'Script',
-            'Storyboard',
-            'Sound Director',
-            'Episode Director',
-            'Series Composition',
-            'Theme Song Lyrics',
-            'Inserted Song Performance',
-            'Key Animation',
-            'ADR Director',
-            'Animation Director',
-            'Special Effects',
-            'Background Art',
-            'Art Director',
-            'Color Design',
-            'Director of Photography',
-            'Digital Paint',
-            'In Between Animation',
-            'Music',
-            'Editing',
-            'Mechanical Design',
-          ],
-        },
-      },
-      
     })
   );
-};

@@ -1,10 +1,15 @@
 const characterRepository = require('./character-repository');
 
-async function addCharacters(name, nicknames, about) {
-  const character = await animeRepository.addAnime(name, nicknames, about);
+async function addCharactersToAnime(name, nicknames, about, animeId) {
+  const character = await characterRepository.addCharactersToAnime(
+    name,
+    nicknames,
+    about,
+    animeId
+  );
   return character;
 }
 
 module.exports = {
-  addCharacters,
+  addCharactersToAnime,
 };

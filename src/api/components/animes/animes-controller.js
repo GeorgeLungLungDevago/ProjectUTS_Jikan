@@ -1,32 +1,48 @@
 const { errorResponder, errorTypes } = require('../../../core/errors');
+const { urlValidator } = require('../../../utils/url-validator');
 const animeService = require('./animes-service');
+
+async function validateRequiredField(data) {
+  if (
+    // judul tidak boleh berupa string kosong (bukan null)
+    !data.title_en ||
+    data.title_en.trim() === '' ||
+    !data.title_jp ||
+    data.title_jp.trim() === '' ||
+    !data.animeStatus ||
+    !data.age_rating ||
+    !data.demographics ||
+    !Array.isArray(data.genres) ||
+    data.genres.length === 0
+  ) {
+    throw errorResponder(
+      errorTypes.VALIDATION_ERROR,
+      'Anime entry is invalid or missing one or more required fields:' +
+        'title_en, title_jp, status, age_rating, demographics, genres'
+    );
+  }
+}
 
 async function addAnime(req, res) {
   try {
     const {
       title_en,
       title_jp,
-      episodes,
       studio,
       status: animeStatus,
       season,
-      episodes_list: episodesList,
       airing_date,
       age_rating,
       demographics,
+      more_info,
       genres,
-      duration_minutes,
-      image_url: imageUrl,
-      staff,
+      duration,
+      image_url,
     } = req.body;
-
-    episodesList = await animeService.validateEpisodesList(
-      req.body.episodes_list
-    );
 
     await validateRequiredField(req.body);
 
-    imageUrl = await animeService.validateImageUrl(req.body.imageUrl);
+    const imageUrl = await urlValidator.validateUrl(image_url);
 
     const data = {
       title_en,
@@ -35,14 +51,13 @@ async function addAnime(req, res) {
       studio,
       animeStatus,
       season,
-      episodesList,
       airing_date,
       age_rating,
       demographics,
+      more_info,
       genres,
-      duration_minutes,
+      duration,
       imageUrl: Array.isArray(imageUrl) ? imageUrl : [imageUrl], // force single string into array
-      staff,
     };
 
     const anime = await animeService.addAnime(data);
@@ -212,20 +227,6 @@ async function getAnimeReviuews(req, res) {
   }
 }
 
-async function getAnimeRelations(req, res) {
-  try {
-    const id = req.params.id;
-    const anime = await animeService.getAnimeRelations(id);
-    if (!anime) {
-      return res.status(404).json({ message: 'Anime not found' });
-    }
-    res.json(anime);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
-  }
-}
-
 async function getAnimeThemes(req, res) {
   try {
     const id = req.params.id;
@@ -252,6 +253,5 @@ module.exports = {
   getAnimeMoreInfo,
   getAnimeRecomendations,
   getAnimeReviuews,
-  getAnimeRelations,
   getAnimeThemes,
 };

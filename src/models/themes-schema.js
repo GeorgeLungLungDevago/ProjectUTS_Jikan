@@ -1,14 +1,13 @@
 module.exports = (db) =>
   db.model(
-    'Characters',
+    'Themes',
     db.Schema({
-      name: String,
-      nicknames: {
-        type: [String],
+      themes: {
+        opening: [String],
+        ending: [String],
       },
-      about: String,
       animeId: {
-        // characters menyimpan FK yg merujuk ke animes-schema
+        // menyimpan FK yg merujuk ke animes-schema
         type: db.Schema.Types.ObjectId,
         ref: 'Animes',
         required: true,
