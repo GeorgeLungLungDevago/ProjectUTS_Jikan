@@ -15,7 +15,7 @@ module.exports = (app) => {
   route.get('/:id', animeController.getAnimeById);
 
   //Mendapatkan info staff melalui id anime
-  route.get('/:id/staff', animeController.getStaffByAnimeId);
+  route.get('/:id/staffs', animeController.getStaffByAnimeId);
 
   //Mendapatkan info episode (title, episode ke brp, dan airing date) melalui id anime
   route.get('/:id/episodes', animeController.getEpisodesByAnimeId);
