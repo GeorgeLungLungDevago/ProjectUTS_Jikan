@@ -8,4 +8,7 @@ module.exports = (app) => {
 
   //Menambahkan data staff anime ke database
   route.post('/', staffController.addStaffToAnime);
+
+  //Mendapatkan info staff melalui id anime
+  route.get('/', staffController.getStaffByAnimeId);
 };

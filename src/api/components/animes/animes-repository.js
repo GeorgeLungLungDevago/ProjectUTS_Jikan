@@ -1,6 +1,4 @@
 const { Animes } = require('../../../models');
-const { Characters } = require('../../../models');
-// const { addAnime } = require('./animes-service');
 
 async function addAnime(animeData) {
   return Animes.create(animeData);
@@ -14,13 +12,8 @@ async function findBasicById(id) {
   return Animes.findById(id).select('title_en title_jp studio status');
 }
 
-async function getStaffByAnimeId(id) {
-  const anime = await Animes.findById(id, 'staff');
-  return anime?.staff || null;
-}
-
 async function getEpisodesByAnimeId(id) {
-  const anime = await Animes.findById(id, 'episodes_list');
+  const anime = await Episodes.findOne({ animeId: id }, 'episodes_list');
   return anime || null;
 }
 
@@ -37,10 +30,6 @@ async function getEpisodesByIndex(id, index) {
     episode: anime.episodes[index],
     airing_date: anime.airing_date,
   };
-}
-
-async function getCharactersByAnimeId(animeId) {
-  return Characters.find({ animeId: animeId });
 }
 
 async function getAnimePictures(id) {
@@ -67,10 +56,8 @@ module.exports = {
   addAnime,
   findById,
   findBasicById,
-  getStaffByAnimeId,
   getEpisodesByAnimeId,
   getEpisodesByIndex,
-  getCharactersByAnimeId,
   getAnimePictures,
   getAnimeMoreInfo,
   getAnimeRecomendations,
