@@ -1,5 +1,6 @@
 const express = require('express');
-const route = express.Router();
+// merge params agar id anime dapat diakses melalui req.params dari staffs-controller
+const route = express.Router({ mergeParams: true });
 const staffController = require('./staffs-controller');
 
 module.exports = (app) => {

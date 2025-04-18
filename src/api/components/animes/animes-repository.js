@@ -2,34 +2,8 @@ const { Animes } = require('../../../models');
 const { Characters } = require('../../../models');
 // const { addAnime } = require('./animes-service');
 
-async function addAnime(
-  title_en,
-  title_jp,
-  studio,
-  status,
-  season,
-  airing_date,
-  age_rating,
-  demographics,
-  more_info,
-  genres,
-  duration,
-  image_url
-) {
-  return Animes.addAnime(
-    title_en,
-    title_jp,
-    studio,
-    status,
-    season,
-    airing_date,
-    age_rating,
-    demographics,
-    more_info,
-    genres,
-    duration,
-    image_url
-  );
+async function addAnime(animeData) {
+  return Animes.create(animeData);
 }
 
 async function findById(id) {

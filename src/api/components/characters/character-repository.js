@@ -1,7 +1,7 @@
 const { Characters } = require('../../../models');
 
-async function addCharactersToAnime(name, nicknames, about, animeId) {
-  return Characters.addCharactersToAnime(name, nicknames, about, animeId);
+async function addCharactersToAnime(characterData) {
+  return Characters.create(characterData);
 }
 
 module.exports = {

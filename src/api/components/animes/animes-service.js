@@ -1,34 +1,7 @@
 const animeRepository = require('./animes-repository');
 
-async function addAnime(
-  title_en,
-  title_jp,
-  episodes,
-  studio,
-  animeStatus,
-  season,
-  airing_date,
-  age_rating,
-  demographics,
-  genres,
-  duration_minutes,
-  image_url
-) {
-  const anime = await animeRepository.addAnime(
-    title_en,
-    title_jp,
-    episodes,
-    studio,
-    animeStatus,
-    season,
-    airing_date,
-    age_rating,
-    demographics,
-    genres,
-    duration_minutes,
-    image_url
-  );
-  return anime;
+async function addAnime(animeData) {
+  return await animeRepository.addAnime(animeData);
 }
 
 async function getFullAnimeById(id) {

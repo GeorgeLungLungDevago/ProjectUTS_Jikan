@@ -43,6 +43,13 @@ async function addAnimeEpisode(req, res) {
 
     const episode = await episodeService.addAnimeEpisode(episodes, animeId);
 
+    if (!episode) {
+      throw errorResponder(
+        errorTypes.UNPROCESSABLE_ENTITY,
+        'Failed to add episodes entry'
+      );
+    }
+
     return res
       .status(201)
       .json({ message: 'Episodes added successfully to the database entry' });

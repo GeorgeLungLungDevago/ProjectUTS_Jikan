@@ -2,8 +2,8 @@ module.exports = (db) =>
   db.model(
     'Animes',
     db.Schema({
-      title_en: { type: String, required: true },
-      title_jp: { type: String, required: true },
+      title_en: { type: String, required: true, unique: true },
+      title_jp: { type: String, required: true, unique: true },
       studio: {
         type: String,
         required: false,
@@ -16,7 +16,7 @@ module.exports = (db) =>
       season: {
         type: String,
         enum: ['Winter', 'Spring', 'Summer', 'Fall', 'Unknown'],
-        required: false,
+        required: true,
       },
       airing_date: {
         start: {
@@ -35,7 +35,7 @@ module.exports = (db) =>
       },
       demographics: {
         type: String,
-        enum: ['shounen', 'shoujo', 'seinen', 'josei', 'kodomo'],
+        enum: ['Shounen', 'Shoujo', 'Seinen', 'Josei', 'Kodomo'],
         required: true,
       },
       more_info: {

@@ -1,5 +1,5 @@
 const { errorResponder, errorTypes } = require('../../../core/errors');
-const { urlValidator } = require('../../../utils/url-validator');
+const { validateUrlArray } = require('../../../utils/url-validator');
 const animeService = require('./animes-service');
 
 async function validateRequiredField(data) {
@@ -9,7 +9,7 @@ async function validateRequiredField(data) {
     data.title_en.trim() === '' ||
     !data.title_jp ||
     data.title_jp.trim() === '' ||
-    !data.animeStatus ||
+    !data.status ||
     !data.age_rating ||
     !data.demographics ||
     !Array.isArray(data.genres) ||
@@ -29,7 +29,7 @@ async function addAnime(req, res) {
       title_en,
       title_jp,
       studio,
-      status: animeStatus,
+      status,
       season,
       airing_date,
       age_rating,
@@ -42,14 +42,17 @@ async function addAnime(req, res) {
 
     await validateRequiredField(req.body);
 
-    const imageUrl = await urlValidator.validateUrl(image_url);
+    await validateUrlArray(image_url);
+
+    for (let i = 0; i < req.body.image_url.length; i++) {
+      console.log(req.body.image_url[i]);
+    }
 
     const data = {
       title_en,
       title_jp,
-      episodes,
       studio,
-      animeStatus,
+      status,
       season,
       airing_date,
       age_rating,
@@ -57,7 +60,7 @@ async function addAnime(req, res) {
       more_info,
       genres,
       duration,
-      imageUrl: Array.isArray(imageUrl) ? imageUrl : [imageUrl], // force single string into array
+      image_url: Array.isArray(image_url) ? image_url : [image_url], // force single string into array
     };
 
     const anime = await animeService.addAnime(data);
@@ -81,7 +84,7 @@ async function addAnime(req, res) {
 async function getFullAnime(req, res) {
   try {
     const id = req.params.id;
-    const anime = await animeService.getFullAnime(id);
+    const anime = await animeService.getFullAnimeById(id);
     if (!anime) {
       return res.status(404).json({ message: 'Anime not found' });
     }
@@ -213,7 +216,7 @@ async function getAnimeRecomendations(req, res) {
   }
 }
 
-async function getAnimeReviuews(req, res) {
+async function getAnimeReviews(req, res) {
   try {
     const id = req.params.id;
     const anime = await animeService.getAnimeReviews(id);
@@ -252,6 +255,6 @@ module.exports = {
   getAnimePictures,
   getAnimeMoreInfo,
   getAnimeRecomendations,
-  getAnimeReviuews,
+  getAnimeReviews,
   getAnimeThemes,
 };

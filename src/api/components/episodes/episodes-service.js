@@ -1,8 +1,7 @@
 const episodeRepository = require('./episodes-repository');
 
 async function addAnimeEpisode(episodes, animeId) {
-  const episode = await episodeRepository.addAnimeEpisode(episodes, animeId);
-  return episode;
+  return await episodeRepository.addAnimeEpisode(episodes, animeId);
 }
 
 module.exports = {
