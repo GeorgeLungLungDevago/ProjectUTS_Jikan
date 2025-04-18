@@ -14,17 +14,11 @@ module.exports = (app) => {
   //Mendapatkan anime by id ( not full )
   route.get('/:id', animeController.getAnimeById);
 
-  //Mendapatkan info staff melalui id anime
-  route.get('/:id/staffs', animeController.getStaffByAnimeId);
-
   //Mendapatkan info episode (title, episode ke brp, dan airing date) melalui id anime
   route.get('/:id/episodes', animeController.getEpisodesByAnimeId);
 
   //Mendapatkan info untuk satu episode melalui index episode dan id anime
   route.get('/:id/episodes/:episode', animeController.getEpisodesByIndex);
-
-  //Mendapatkan karakter anime dari id anime
-  route.get('/:id/characters', animeController.getCharactersByAnimeId);
 
   //Mengembalikan gambar anime (cover anime)
   route.get('/:id/pictures', animeController.getAnimePictures);

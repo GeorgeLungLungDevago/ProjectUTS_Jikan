@@ -31,6 +31,21 @@ async function addStaffToAnime(req, res) {
   }
 }
 
+async function getStaffByAnimeId(req, res) {
+  try {
+    const id = req.params.id;
+    const staff = await staffService.getStaffByAnimeId(id);
+    if (!staff) {
+      return res.status(404).json({ message: 'No staff found for this anime' });
+    }
+    res.json(staff);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
 module.exports = {
   addStaffToAnime,
+  getStaffByAnimeId,
 };

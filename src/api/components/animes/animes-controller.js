@@ -109,20 +109,6 @@ async function getAnimeById(req, res) {
   }
 }
 
-async function getStaffByAnimeId(req, res) {
-  try {
-    const id = req.params.id;
-    const staff = await animeService.getStaffByAnimeId(id);
-    if (!staff) {
-      return res.status(404).json({ message: 'No staff found for this anime' });
-    }
-    res.json(staff);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Server error' });
-  }
-}
-
 async function getEpisodesByAnimeId(req, res) {
   try {
     const id = req.params.id;
@@ -154,22 +140,6 @@ async function getEpisodesByIndex(req, res) {
     res.json(data);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: 'Server error' });
-  }
-}
-
-async function getCharactersByAnimeId(req, res) {
-  try {
-    const id = req.params.id;
-    const characters = await animeService.getCharactersByAnimeId(id);
-    if (!characters || characters.length === 0) {
-      return res
-        .status(404)
-        .json({ message: 'No characters found for this anime' });
-    }
-    res.json(characters);
-  } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 }
@@ -248,10 +218,8 @@ module.exports = {
   addAnime,
   getFullAnime,
   getAnimeById,
-  getStaffByAnimeId,
   getEpisodesByAnimeId,
   getEpisodesByIndex,
-  getCharactersByAnimeId,
   getAnimePictures,
   getAnimeMoreInfo,
   getAnimeRecomendations,

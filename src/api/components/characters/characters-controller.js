@@ -40,6 +40,23 @@ async function addCharactersToAnime(req, res) {
   }
 }
 
+async function getCharactersByAnimeId(req, res) {
+  try {
+    const id = req.params.id;
+    const characters = await characterService.getCharactersByAnimeId(id);
+    if (!characters || characters.length === 0) {
+      return res
+        .status(404)
+        .json({ message: 'No characters found for this anime' });
+    }
+    res.json(characters);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
 module.exports = {
   addCharactersToAnime,
+  getCharactersByAnimeId,
 };
