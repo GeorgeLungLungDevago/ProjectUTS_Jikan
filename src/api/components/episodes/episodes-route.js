@@ -14,5 +14,5 @@ module.exports = (app) => {
   route.get('/', episodeController.getEpisodesByAnimeId);
 
   // Mendapatkan info untuk satu episode melalui index episode dan id anime
-  route.get('/:ep', episodeController.getEpisodesByIndex);
+  route.get('/:episode', episodeController.getEpisodesByIndex);
 };

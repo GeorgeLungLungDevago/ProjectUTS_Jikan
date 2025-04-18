@@ -6,6 +6,7 @@ const characters = require('./components/characters/characters-route');
 const staffs = require('./components/staffs/staffs-route');
 const episodes = require('./components/episodes/episodes-route');
 const animeCharacters = require('./components/characters/anime-characters-route');
+const themes = require('./components/themes/themes-route');
 
 module.exports = () => {
   const app = express.Router();
@@ -16,6 +17,7 @@ module.exports = () => {
   staffs(app);
   episodes(app);
   animeCharacters(app);
+  themes(app);
 
   return app;
 };
