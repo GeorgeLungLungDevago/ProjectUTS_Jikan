@@ -59,6 +59,51 @@ async function addAnimeEpisode(req, res) {
   }
 }
 
+async function getEpisodesByAnimeId(req, res) {
+  try {
+    const { id } = req.params;
+    const ep = await episodeService.getEpisodesByAnimeId(id);
+    if (!ep || !ep.episodes) {
+      return res
+        .status(404)
+        .json({ message: 'Anime not found or no episodes available' });
+    }
+    res.json(ep.episodes);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+async function getEpisodesByIndex(req, res) {
+  try {
+    const { id, episode } = req.params;
+    const index = parseInt(episode, 10);
+
+    if (isNaN(index) || index < 0) {
+      //Menjaga agar yg disebut ada episode nya
+      return res
+        .status(404)
+        .json({ message: 'Invalid episode index' });
+    }
+
+    const data = await episodeService.getEpisodesByIndex(id, index);
+
+    //Cek data episode
+    if (!data) {
+      return res
+        .status(404)
+        .json({ message: 'Episode not found' });
+    }
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
 module.exports = {
   addAnimeEpisode,
+  getEpisodesByAnimeId,
+  getEpisodesByIndex,
 };

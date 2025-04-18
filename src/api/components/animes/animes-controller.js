@@ -123,41 +123,6 @@ async function getStaffByAnimeId(req, res) {
   }
 }
 
-async function getEpisodesByAnimeId(req, res) {
-  try {
-    const id = req.params.id;
-    const episodes = await animeService.getEpisodesByAnimeId(id);
-    if (!episodes) {
-      return res
-        .status(404)
-        .json({ message: 'Anime not found or no episodes available' });
-    }
-    res.json(episodes);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Server error' });
-  }
-}
-
-async function getEpisodesByIndex(req, res) {
-  try {
-    const { id, episode } = req.params;
-    const index = parseInt(episode, 10);
-    if (isNaN(index) || index < 0) {
-      //Menjaga agar yg disebut ada episode nya
-      return res.status(404).json({ message: 'Invalid episode index' });
-    }
-    const data = await animeService.getEpisodesByIndex(id, index);
-    if (!data) {
-      return res.status(404).json({ message: 'Episode not found' });
-    }
-    res.json(data);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Server error' });
-  }
-}
-
 async function getCharactersByAnimeId(req, res) {
   try {
     const id = req.params.id;
@@ -249,8 +214,6 @@ module.exports = {
   getFullAnime,
   getAnimeById,
   getStaffByAnimeId,
-  getEpisodesByAnimeId,
-  getEpisodesByIndex,
   getCharactersByAnimeId,
   getAnimePictures,
   getAnimeMoreInfo,

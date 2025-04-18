@@ -16,14 +16,6 @@ async function getStaffByAnimeId(id) {
   return await animeRepository.getStaffByAnimeId(id);
 }
 
-async function getEpisodesByAnimeId(id) {
-  return await animeRepository.getEpisodesByAnimeId(id);
-}
-
-async function getEpisodesByIndex(id, index) {
-  return await animeRepository.getEpisodesByIndex(id, index);
-}
-
 async function getCharactersByAnimeId(AnimeId) {
   return await animeRepository.getCharactersByAnimeId(AnimeId);
 }
@@ -53,8 +45,6 @@ module.exports = {
   getFullAnimeById,
   getAnimeById,
   getStaffByAnimeId,
-  getEpisodesByAnimeId,
-  getEpisodesByIndex,
   getCharactersByAnimeId,
   getAnimePictures,
   getAnimeMoreInfo,
