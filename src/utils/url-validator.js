@@ -1,6 +1,7 @@
 const isUrlHttp = require('is-url-http');
 const { errorResponder, errorTypes } = require('../core/errors');
 
+// cukup gunakan fungsi ini saja jika url disimpan dalam String biasa
 async function validateUrlReq(url) {
   if (!isUrlHttp(url)) {
     throw errorResponder(errorTypes.VALIDATION_ERROR, 'Invalid URL!');
