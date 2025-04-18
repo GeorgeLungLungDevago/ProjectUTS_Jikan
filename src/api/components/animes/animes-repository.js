@@ -1,6 +1,4 @@
 const { Animes } = require('../../../models');
-const { Characters } = require('../../../models');
-// const { addAnime } = require('./animes-service');
 
 async function addAnime(animeData) {
   return Animes.create(animeData);
@@ -14,6 +12,7 @@ async function findBasicById(id) {
   return Animes.findById(id).select('title_en title_jp studio status');
 }
 
+<<<<<<< HEAD
 async function getStaffByAnimeId(id) {
   const anime = await Animes.findById(id, 'staff');
   return anime?.staff || null;
@@ -21,6 +20,26 @@ async function getStaffByAnimeId(id) {
 
 async function getCharactersByAnimeId(animeId) {
   return Characters.find({ animeId: animeId });
+=======
+async function getEpisodesByAnimeId(id) {
+  const anime = await Episodes.findOne({ animeId: id }, 'episodes_list');
+  return anime || null;
+}
+
+async function getEpisodesByIndex(id, index) {
+  const anime = await Animes.findById(id).select(
+    'title_en episodes airing_date'
+  );
+  if (!anime || !anime.episodes || anime.episodes.length < index) {
+    //Menentukan adanya episode atau tidak
+    return null;
+  }
+  return {
+    title_en: anime.title_en,
+    episode: anime.episodes[index],
+    airing_date: anime.airing_date,
+  };
+>>>>>>> 328944076171c8b15748f146bcaf66597df6f8c9
 }
 
 async function getAnimePictures(id) {
@@ -47,8 +66,13 @@ module.exports = {
   addAnime,
   findById,
   findBasicById,
+<<<<<<< HEAD
   getStaffByAnimeId,
   getCharactersByAnimeId,
+=======
+  getEpisodesByAnimeId,
+  getEpisodesByIndex,
+>>>>>>> 328944076171c8b15748f146bcaf66597df6f8c9
   getAnimePictures,
   getAnimeMoreInfo,
   getAnimeRecomendations,
