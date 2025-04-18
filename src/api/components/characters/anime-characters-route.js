@@ -1,5 +1,6 @@
 const express = require('express');
-const route = express.Router();
+// merge params agar id anime dapat diakses melalui req.params masing2 controller
+const route = express.Router({ mergeParams: true });
 const characterController = require('./characters-controller');
 
 module.exports = (app) => {
