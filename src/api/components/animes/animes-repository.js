@@ -19,26 +19,6 @@ async function getStaffByAnimeId(id) {
   return anime?.staff || null;
 }
 
-async function getEpisodesByAnimeId(id) {
-  const anime = await Animes.findById(id, 'episodes_list');
-  return anime || null;
-}
-
-async function getEpisodesByIndex(id, index) {
-  const anime = await Animes.findById(id).select(
-    'title_en episodes airing_date'
-  );
-  if (!anime || !anime.episodes || anime.episodes.length < index) {
-    //Menentukan adanya episode atau tidak
-    return null;
-  }
-  return {
-    title_en: anime.title_en,
-    episode: anime.episodes[index],
-    airing_date: anime.airing_date,
-  };
-}
-
 async function getCharactersByAnimeId(animeId) {
   return Characters.find({ animeId: animeId });
 }
@@ -68,8 +48,6 @@ module.exports = {
   findById,
   findBasicById,
   getStaffByAnimeId,
-  getEpisodesByAnimeId,
-  getEpisodesByIndex,
   getCharactersByAnimeId,
   getAnimePictures,
   getAnimeMoreInfo,
