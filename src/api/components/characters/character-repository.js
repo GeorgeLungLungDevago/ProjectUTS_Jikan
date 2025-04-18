@@ -1,10 +1,9 @@
 const { Characters } = require('../../../models');
-const { addCharacters } = require('./animes-service');
 
-async function addCharacters(name, nicknames, about) {
-  return Characters.addCharacters(name, nicknames, about);
+async function addCharactersToAnime(characterData) {
+  return Characters.create(characterData);
 }
 
 module.exports = {
-  addCharacters,
+  addCharactersToAnime,
 };

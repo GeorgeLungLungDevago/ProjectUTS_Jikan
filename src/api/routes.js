@@ -1,17 +1,21 @@
 const express = require('express');
 
-const books = require('./components/books/books-route');
 const users = require('./components/users/users-route');
 const animes = require('./components/animes/animes-route');
 const characters = require('./components/characters/characters-route');
+const staffs = require('./components/staffs/staffs-route');
+const episodes = require('./components/episodes/episodes-route');
+const animeCharacters = require('./components/characters/anime-characters-route');
 
 module.exports = () => {
   const app = express.Router();
 
-  books(app);
   users(app);
   animes(app);
   characters(app);
+  staffs(app);
+  episodes(app);
+  animeCharacters(app);
 
   return app;
 };

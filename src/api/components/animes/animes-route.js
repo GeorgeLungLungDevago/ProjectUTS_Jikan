@@ -36,10 +36,7 @@ module.exports = (app) => {
   route.get('/:id/recomendations', animeController.getAnimeRecomendations);
 
   //mendapatkan review anime dari id anime
-  route.get('/:id/reviews', animeController.getAnimeReviuews);
-
-  //mendapatkan relation anime dari id anime 
-  route.get('/:id/relation', animeController.getAnimeRelations);
+  route.get('/:id/reviews', animeController.getAnimeReviews);
 
   //mendapatkan tema anime dengan menggunakan id anime
   route.get('/:id/themes', animeController.getAnimeThemes);

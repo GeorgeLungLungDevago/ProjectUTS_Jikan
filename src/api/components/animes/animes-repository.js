@@ -1,37 +1,9 @@
 const { Animes } = require('../../../models');
 const { Characters } = require('../../../models');
-const { addAnime } = require('./animes-service');
+// const { addAnime } = require('./animes-service');
 
-async function addAnime(
-  title_en,
-  title_jp,
-  episodes,
-  studio,
-  status,
-  season,
-  airing_date,
-  age_rating,
-  demographics,
-  genres,
-  duration_minutes,
-  image_url,
-  staff
-) {
-  return Animes.addAnime(
-    title_en,
-    title_jp,
-    episodes,
-    studio,
-    status,
-    season,
-    airing_date,
-    age_rating,
-    demographics,
-    genres,
-    duration_minutes,
-    image_url,
-    staff
-  );
+async function addAnime(animeData) {
+  return Animes.create(animeData);
 }
 
 async function findById(id) {
@@ -56,7 +28,7 @@ async function getEpisodesByIndex(id, index) {
   const anime = await Animes.findById(id).select(
     'title_en episodes airing_date'
   );
-  if (!anime || !anime.episodes || anime.episodes.lenght < index) {
+  if (!anime || !anime.episodes || anime.episodes.length < index) {
     //Menentukan adanya episode atau tidak
     return null;
   }
@@ -87,10 +59,6 @@ async function getAnimeReviews(id) {
   return Animes.findById(id, 'reviews');
 }
 
-async function getAnimeRelations(id) {
-  return Animes.findById(id, 'relations');
-}
-
 async function getAnimeThemes(id) {
   return Animes.findById(id, 'themes');
 }
@@ -107,6 +75,5 @@ module.exports = {
   getAnimeMoreInfo,
   getAnimeRecomendations,
   getAnimeReviews,
-  getAnimeRelations,
   getAnimeThemes,
 };
