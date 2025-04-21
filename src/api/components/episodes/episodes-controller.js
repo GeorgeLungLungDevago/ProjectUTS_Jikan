@@ -1,5 +1,5 @@
 const { errorResponder, errorTypes } = require('../../../core/errors');
-const { urlValidator } = require('../../../utils/url-validator');
+const { validateUrlReq } = require('../../../utils/url-validator');
 const episodeService = require('./episodes-service');
 
 async function validateEpisodesList(episodes) {
@@ -12,22 +12,22 @@ async function validateEpisodesList(episodes) {
 
   for (let i = 0; i < episodes.length; ++i) {
     const ep = episodes[i];
-    if (!(await urlValidator.validateUrl(ep.url))) {
+    if (!(await validateUrlReq(ep.url))) {
       throw errorResponder(
         errorTypes.VALIDATION_ERROR,
-        'Episode ${i + 1} has invalid episode URL!'
+        `Episode ${i + 1} has invalid episode URL!`
       );
     }
     if (!ep.title) {
       throw errorResponder(
         errorTypes.VALIDATION_ERROR,
-        'Episode ${i + 1} has invalid or missing title!'
+        `Episode ${i + 1} has invalid or missing title!`
       );
     }
-    if (!ep.aired || !(ep.aired instanceof Date)) {
+    if (!ep.aired || isNaN(Date.parse(ep.aired))) {
       throw errorResponder(
         errorTypes.VALIDATION_ERROR,
-        'Episode ${i + 1} has invalid or missing aired date!'
+        `Episode ${i + 1} has invalid or missing airing date!`
       );
     }
   }
@@ -61,7 +61,7 @@ async function addAnimeEpisode(req, res) {
 
 async function getEpisodesByAnimeId(req, res) {
   try {
-    const { id } = req.params;
+    const id = req.params.id;
     const ep = await episodeService.getEpisodesByAnimeId(id);
     if (!ep || !ep.episodes) {
       return res
@@ -78,22 +78,18 @@ async function getEpisodesByAnimeId(req, res) {
 async function getEpisodesByIndex(req, res) {
   try {
     const { id, episode } = req.params;
-    const index = parseInt(episode, 10);
-
+    // kurang satu agar index episode di endpoint mulai dari 1
+    const index = parseInt(episode, 10) - 1;
     if (isNaN(index) || index < 0) {
       //Menjaga agar yg disebut ada episode nya
-      return res
-        .status(404)
-        .json({ message: 'Invalid episode index' });
+      return res.status(404).json({ message: 'Invalid episode index' });
     }
 
     const data = await episodeService.getEpisodesByIndex(id, index);
 
     //Cek data episode
     if (!data) {
-      return res
-        .status(404)
-        .json({ message: 'Episode not found' });
+      return res.status(404).json({ message: 'Episode not found' });
     }
     res.json(data);
   } catch (error) {
