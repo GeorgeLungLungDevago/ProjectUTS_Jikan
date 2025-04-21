@@ -25,4 +25,7 @@ module.exports = (app) => {
 
   // mendapatkan review anime dari id anime
   route.get('/:id/reviews', animeController.getAnimeReviews);
+
+  // // mengembalikan query anime (bukan full) secara acak
+  // route.get('/random/anime');
 };
