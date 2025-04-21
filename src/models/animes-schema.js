@@ -4,10 +4,7 @@ module.exports = (db) =>
     db.Schema({
       title_en: { type: String, required: true, unique: true },
       title_jp: { type: String, required: true, unique: true },
-      studio: {
-        type: String,
-        required: false,
-      },
+      studio: { type: String, required: false },
       status: {
         type: String,
         enum: ['Airing', 'Completed', 'Upcoming'],
@@ -38,14 +35,8 @@ module.exports = (db) =>
         enum: ['Shounen', 'Shoujo', 'Seinen', 'Josei', 'Kodomo'],
         required: true,
       },
-      more_info: {
-        type: String,
-        required: false,
-      },
-      genres: {
-        type: [String],
-        required: true,
-      },
+      more_info: { type: String, required: false },
+      genres: { type: [String], required: true },
       duration: String,
       image_url: [String],
     })
