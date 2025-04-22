@@ -4,6 +4,10 @@ async function addAnime(animeData) {
   return await animeRepository.addAnime(animeData);
 }
 
+async function getAnimes(page, limit) {
+  return await animeRepository.getAnimes(page, limit);
+}
+
 async function getFullAnimeById(id) {
   return await animeRepository.findById(id);
 }
@@ -28,12 +32,18 @@ async function getAnimeReviews(id) {
   return await animeRepository.getAnimeReviews(id);
 }
 
+async function getRandomAnime() {
+  return await animeRepository.getRandomAnime();
+}
+
 module.exports = {
   addAnime,
+  getAnimes,
   getFullAnimeById,
   getAnimeById,
   getAnimePictures,
   getAnimeMoreInfo,
   getAnimeRecomendations,
   getAnimeReviews,
+  getRandomAnime,
 };
