@@ -1,3 +1,4 @@
+const e = require('express');
 const { errorResponder, errorTypes } = require('../../../core/errors');
 const { validateUrlArray } = require('../../../utils/url-validator');
 const animeService = require('./animes-service');
@@ -40,6 +41,18 @@ async function addAnime(req, res) {
       image_url,
     } = req.body;
 
+    // instasiasi field tanggal agar dianggap sebagai
+    // tipe data Date oleh js, bukan string
+    const startDate = new Date(airing_date.start);
+    const endDate = new Date(airing_date.end);
+
+    if (endDate < startDate) {
+      throw errorResponder(
+        errorTypes.VALIDATION_ERROR,
+        'Airing start date must be less than airing date end!'
+      );
+    }
+
     await validateRequiredField(req.body);
 
     await validateUrlArray(image_url);
@@ -71,6 +84,28 @@ async function addAnime(req, res) {
     return res
       .status(201)
       .json({ message: 'Anime added successfully to the database entry' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+async function getAnimes(req, res) {
+  try {
+    // default page = 1 dan limit = 3
+    const { page = 1, limit = 3 } = req.query;
+    // kurangi dengan 1 agar indeks page mulai dari 1 dari sisi client
+    console.log('page:', page, 'limit:', limit);
+    const animes = await animeService.getAnimes(
+      parseInt(page),
+      parseInt(limit)
+    );
+
+    if (!animes || animes.length === 0) {
+      return res.status(404).json({ message: 'No anime found!' });
+    }
+
+    return res.status(200).json(animes);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -178,8 +213,22 @@ async function getAnimeReviews(req, res) {
   }
 }
 
+async function getRandomAnime(req, res) {
+  try {
+    const anime = await animeService.getRandomAnime();
+    if (!anime) {
+      return res.status(404).json({ message: 'Anime not found' });
+    }
+    res.json(anime);
+  } catch {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
 module.exports = {
   addAnime,
+  getAnimes,
   getFullAnime,
   getAnimeById,
   getCharactersByAnimeId,
@@ -187,4 +236,5 @@ module.exports = {
   getAnimeMoreInfo,
   getAnimeRecomendations,
   getAnimeReviews,
+  getRandomAnime,
 };
