@@ -8,6 +8,6 @@ module.exports = (app) => {
 
   route.post('/', characterController.addCharactersToAnime);
 
-  //Mendapatkan karakter anime dari id anime
+  // Mendapatkan karakter anime dari id anime
   route.get('/', characterController.getCharactersByAnimeId);
 };

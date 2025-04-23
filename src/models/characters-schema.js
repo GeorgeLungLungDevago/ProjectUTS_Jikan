@@ -1,17 +1,22 @@
 module.exports = (db) =>
+  db.models.Characters ||
   db.model(
     'Characters',
-    db.Schema({
-      name: String,
-      nicknames: {
-        type: [String],
-      },
-      about: String,
+    new db.Schema({
+      name: { type: String, required: true },
+      nicknames: { type: [String], default: [] },
+      about: { type: String, required: true },
       animeId: {
-        // characters menyimpan FK yg merujuk ke animes-schema
         type: db.Schema.Types.ObjectId,
         ref: 'Animes',
         required: true,
       },
+      voice_actors: [
+        {
+          name: { type: String, required: true },
+          language: { type: String, required: true },
+        },
+      ],
+      pictures: { type: [String], default: [] },
     })
   );

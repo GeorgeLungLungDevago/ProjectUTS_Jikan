@@ -1,13 +1,11 @@
 module.exports = (db) =>
+  db.models.Animes ||
   db.model(
     'Animes',
-    db.Schema({
+    new db.Schema({
       title_en: { type: String, required: true, unique: true },
       title_jp: { type: String, required: true, unique: true },
-      studio: {
-        type: String,
-        required: false,
-      },
+      studio: { type: String },
       status: {
         type: String,
         enum: ['Airing', 'Completed', 'Upcoming'],
@@ -19,14 +17,8 @@ module.exports = (db) =>
         required: true,
       },
       airing_date: {
-        start: {
-          type: Date, // null if the airing date is TBA
-          required: false,
-        },
-        end: {
-          type: Date, // null if the anime is still airing
-          required: false,
-        },
+        start: { type: Date },
+        end: { type: Date },
       },
       age_rating: {
         type: String,
@@ -38,15 +30,9 @@ module.exports = (db) =>
         enum: ['Shounen', 'Shoujo', 'Seinen', 'Josei', 'Kodomo'],
         required: true,
       },
-      more_info: {
-        type: String,
-        required: false,
-      },
-      genres: {
-        type: [String],
-        required: true,
-      },
-      duration: String,
-      image_url: [String],
+      more_info: { type: String },
+      genres: { type: [String], required: true },
+      duration: { type: String },
+      image_url: { type: [String], default: [] },
     })
   );

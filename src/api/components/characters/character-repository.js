@@ -5,7 +5,7 @@ async function addCharactersToAnime(characterData) {
 }
 
 async function getCharactersByAnimeId(animeId) {
-  return Characters.find({ animeId: animeId });
+  return Characters.find({ animeId });
 }
 
 module.exports = {

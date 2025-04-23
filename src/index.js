@@ -1,18 +1,21 @@
-const { env, port } = require('./core/config');
-const logger = require('./core/logger')('app');
-const server = require('./core/server');
+require("dotenv").config();
+const { env } = require("./core/config");
+const logger = require("./core/logger")("app");
+const server = require("./core/server");
 
-const app = server.listen(port, (err) => {
+const PORT = process.env.PORT || 5000;
+
+const app = server.listen(PORT, (err) => {
   if (err) {
-    logger.fatal(err, 'Failed to start the server.');
+    logger.fatal(err, "Failed to start the server.");
     process.exit(1);
   } else {
-    logger.info(`Server runs at port ${port} in ${env} environment`);
+    logger.info(`Server runs at port ${PORT} in ${env} environment`);
   }
 });
 
-process.on('uncaughtException', (err) => {
-  logger.fatal(err, 'Uncaught exception.');
+process.on("uncaughtException", (err) => {
+  logger.fatal(err, "Uncaught exception.");
 
   // Shutdown the server gracefully
   app.close(() => process.exit(1));
