@@ -29,6 +29,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Log HTTP requests with Pino
 app.use(pinoHTTP({ logger }));
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    status: 'success',
+    message: 'Server is active',
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // API routes
 app.use(`${config.api.prefix}`, routes());
 
