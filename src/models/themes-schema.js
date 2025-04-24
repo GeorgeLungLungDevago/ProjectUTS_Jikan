@@ -3,8 +3,8 @@ module.exports = (db) =>
     'Themes',
     db.Schema({
       themes: {
-        opening: [String],
-        ending: [String],
+        opening_url: [String],
+        ending_url: [String],
       },
       animeId: {
         // menyimpan FK yg merujuk ke animes-schema
