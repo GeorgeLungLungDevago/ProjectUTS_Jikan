@@ -14,8 +14,8 @@ async function addThemesToAnime(req, res) {
       );
     }
 
-    await validateUrlArray(themes.opening);
-    await validateUrlArray(themes.ending);
+    await validateUrlArray(themes.opening_url);
+    await validateUrlArray(themes.ending_url);
 
     const validThemes = await themeService.addThemesToAnime(themes, animeId);
 

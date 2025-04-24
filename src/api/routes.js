@@ -1,6 +1,5 @@
 const express = require('express');
 
-const users = require('./components/users/users-route');
 const animes = require('./components/animes/animes-route');
 const characters = require('./components/characters/characters-route');
 const staffs = require('./components/staffs/staffs-route');
@@ -12,7 +11,6 @@ const random = require('./components/animes/random-route');
 module.exports = () => {
   const app = express.Router();
 
-  users(app);
   animes(app);
   characters(app);
   staffs(app);
